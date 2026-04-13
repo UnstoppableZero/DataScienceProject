@@ -2,9 +2,5 @@ pandas
 matplotlib
 seaborn
 streamlit
-scikit-learn
-xgboost
-fairlearn
-joblib
 Pillow
 numpy
