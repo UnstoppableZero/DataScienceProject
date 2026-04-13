@@ -119,9 +119,11 @@ elif page == "Regional Representation":
         filtered = df[df['region'] == region_filter]
     else:
         filtered = df
-    st.dataframe(filtered[['track_name', 'artist_name', 'region', 'cultural_genre',
-                            'popularity', 'danceability', 'energy', 'valence', 'top10']].head(50),
-                 use_container_width=True)
+
+    display_cols = [c for c in ['track_name', 'artist_name', 'region', 'cultural_genre',
+                                 'popularity', 'danceability', 'energy', 'valence', 'top10']
+                    if c in filtered.columns]
+    st.dataframe(filtered[display_cols].head(50), use_container_width=True)
 
 # --- PAGE: Model Performance ---
 elif page == "Model Performance":
@@ -207,5 +209,4 @@ elif page == "Fairness Audit":
     metrics_df.columns = ['Region', 'Accuracy', 'Precision', 'Recall', 'F1']
     metrics_df = metrics_df.set_index('Region')
     metrics_df = (metrics_df * 100).round(1)
-    st.dataframe(metrics_df.style.format("{:.1f}%").background_gradient(cmap='RdYlGn'),
-                 use_container_width=True)
+    st.dataframe(metrics_df, use_container_width=True)
