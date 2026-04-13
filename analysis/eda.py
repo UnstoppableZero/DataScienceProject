@@ -28,13 +28,12 @@ region_counts = df['region'].value_counts().reset_index()
 region_counts.columns = ['region', 'count']
 
 plt.figure(figsize=(12, 6))
-bars = sns.barplot(data=region_counts, x='region', y='count', palette='Blues_d')
+bars = sns.barplot(data=region_counts, x='region', y='count', hue='region', legend=False, palette='Blues_d')
 plt.title('Track Representation by Region', fontsize=16, fontweight='bold')
 plt.xlabel('Region', fontsize=12)
 plt.ylabel('Number of Tracks', fontsize=12)
 plt.xticks(rotation=45, ha='right')
 
-# Add value labels on bars
 for bar, val in zip(bars.patches, region_counts['count']):
     bars.annotate(f'{val}', (bar.get_x() + bar.get_width() / 2, bar.get_height()),
                   ha='center', va='bottom', fontsize=10)
@@ -51,7 +50,7 @@ hit_rate['hit_rate_pct'] = hit_rate['hit_rate'] * 100
 hit_rate = hit_rate.sort_values('hit_rate_pct', ascending=False)
 
 plt.figure(figsize=(12, 6))
-bars = sns.barplot(data=hit_rate, x='region', y='hit_rate_pct', palette='RdYlGn')
+bars = sns.barplot(data=hit_rate, x='region', y='hit_rate_pct', hue='region', legend=False, palette='RdYlGn')
 plt.title('Top 10 Hit Rate by Region (%)', fontsize=16, fontweight='bold')
 plt.xlabel('Region', fontsize=12)
 plt.ylabel('Hit Rate (%)', fontsize=12)
@@ -87,7 +86,7 @@ print("Chart 3 saved.")
 # --- Chart 4: Correlation Heatmap ---
 corr_cols = ['popularity', 'danceability', 'energy', 'loudness', 'speechiness',
              'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo']
-corr_matrix = df[corr_cols].corr()
+corr_matrix = df[corr_cols].corr(numeric_only=True)
 
 plt.figure(figsize=(12, 10))
 sns.heatmap(corr_matrix, annot=True, fmt='.2f', cmap='coolwarm',
@@ -100,7 +99,8 @@ print("Chart 4 saved.")
 
 # --- Chart 5: Popularity Distribution by Region ---
 plt.figure(figsize=(14, 7))
-sns.boxplot(data=df, x='region', y='popularity', palette='Set2', order=df.groupby('region')['popularity'].median().sort_values(ascending=False).index)
+sns.boxplot(data=df, x='region', y='popularity', hue='region', legend=False, palette='Set2',
+            order=df.groupby('region')['popularity'].median().sort_values(ascending=False).index)
 plt.title('Popularity Distribution by Region', fontsize=16, fontweight='bold')
 plt.xlabel('Region', fontsize=12)
 plt.ylabel('Popularity Score (0-100)', fontsize=12)
@@ -133,7 +133,7 @@ reach_counts.columns = ['global_reach', 'count']
 
 plt.figure(figsize=(8, 6))
 colors = ['#5cb85c', '#f0ad4e', '#d9534f']
-plt.pie(reach_counts['count'], labels=reach_counts['global_reach'],
+plt.pie(reach_counts['count'].tolist(), labels=reach_counts['global_reach'].tolist(),
         autopct='%1.1f%%', colors=colors, startangle=140,
         textprops={'fontsize': 13})
 plt.title('Global Reach Distribution (Ollama Cultural Labels)', fontsize=16, fontweight='bold')
@@ -159,4 +159,4 @@ plt.savefig('outputs/eda/chart8_language_diversity.png', dpi=150)
 plt.show()
 print("Chart 8 saved.")
 
-print("\n=== EDA Complete — All charts saved to outputs/eda/ ===")
+print("\n=== EDA Complete -- All charts saved to outputs/eda/ ===")
