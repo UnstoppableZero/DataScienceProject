@@ -136,9 +136,9 @@ summary = pd.DataFrame({
                 roc_auc_score(y_test, rf_proba),
                 roc_auc_score(y_test, xgb_proba)],
     'Top10 Recall': [
-        classification_report(y_test, lr_preds, output_dict=True)['1']['recall'],
-        classification_report(y_test, rf_preds, output_dict=True)['1']['recall'],
-        classification_report(y_test, xgb_preds, output_dict=True)['1']['recall'],
+        dict(classification_report(y_test, lr_preds, output_dict=True))['1']['recall'],  # type: ignore[index]
+        dict(classification_report(y_test, rf_preds, output_dict=True))['1']['recall'],  # type: ignore[index]
+        dict(classification_report(y_test, xgb_preds, output_dict=True))['1']['recall'],  # type: ignore[index]
     ]
 })
 print("\n=== Model Comparison Summary ===")
