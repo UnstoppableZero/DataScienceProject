@@ -1,56 +1,45 @@
-# 🎧 BlindSpot: Music Bias Audit
+# BlindSpot: Music Bias Audit 🎵🔍
 **Does Streaming Favor Certain Sounds? An Audit of Audio Features and Cultural Representation.**
 
-![Python](https://img.shields.io/badge/Python-3.11-blue.svg)
-![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Scikit--Learn%20%7C%20XGBoost-orange.svg)
-![Fairness](https://img.shields.io/badge/Fairness-Microsoft%20Fairlearn-green.svg)
-![API](https://img.shields.io/badge/API-Spotify%20%7C%20Last.fm-1DB954.svg)
+## 📖 Project Overview
+Streaming platforms like Spotify use recommendation algorithms that influence which songs reach global audiences. While audio features are public, it is unclear if tracks from certain cultural or geographic origins are systematically over- or underrepresented on the charts. 
 
-## 📌 Executive Summary
-Streaming platforms control music discovery for over 600 million global users. This project investigates whether streaming ecosystems systematically advantage certain musical sounds or cultural origins over others. 
+This project aims to predict chart success purely from audio data and apply fairness audits to identify patterns of underrepresentation. It combines predictive machine learning with responsible AI principles, directly addressing questions of cultural equity in algorithmic systems.
 
-By analyzing the audio features of top-charting tracks across 12 distinct global regions, we built predictive models for chart success and applied fairness auditing frameworks to identify patterns of underrepresentation. This project combines predictive machine learning with responsible AI principles to directly address cultural equity in algorithmic systems.
+**Track:** Tech & Transformation — AI & Emerging Technologies  
+**Institution:** Delaware State University (Spring 2026)
+
+---
 
 ## 👥 The Team
 * **Michael Danquah-Tabbi**
 * **Dahmir Mason**
 * **Owen Matimu**
-* **Zien Reams**
+* **Zion Reams**
 
-**Institution:** Delaware State University  
-**Track:** Tech & Transformation — AI & Emerging Technologies  
-**Advisor:** Dr. Fatima Boukari  
+*Advisor: Dr. Fatima Boukari*
 
 ---
 
-## 🛠️ Technical Architecture & Tech Stack
-
-### 1. Data Collection
-* **Spotify Web API (Spotipy):** Extraction of continuous audio features (Tempo, Energy, Valence, Danceability, etc.) for 50,000+ tracks.
-* **Last.fm / MusicBrainz API:** Scraping supplemental metadata for artist origin and raw genre tags.
-
-### 2. AI Enrichment & Processing
-* **Ollama (Local LLM):** Processing, cleaning, and clustering highly unstructured, user-generated genre tags into standardized cultural categories.
-* **Pandas & NumPy:** Handling missing values, feature scaling, and interaction feature engineering (e.g., energy × danceability).
-
-### 3. Machine Learning Models
-* **Scikit-learn & XGBoost:** Training Logistic Regression, Random Forest, and XGBoost classifiers to predict global top 10 chart success based strictly on pure audio profiles.
-
-### 4. Fairness & Bias Auditing
-* **Microsoft Fairlearn:** Calculating disparity across regions using metrics such as Demographic Parity and Equal Opportunity / Equalized Odds to measure systemic bias thresholds.
+## 🛠️ Tech Stack & Tooling
+* **Data Extraction:** Spotify Web API (audio features), MusicBrainz / Last.fm APIs (geographic metadata)
+* **AI Processing:** Local AI (**Ollama**) for cleaning and clustering unstructured, user-generated genre tags into standardized cultural categories
+* **Machine Learning:** Logistic Regression, Random Forest, and XGBoost
+* **Fairness Auditing:** Microsoft **Fairlearn**
+* **Evaluation Metrics:** Precision, Recall, F1-Score, ROC-AUC, Demographic Parity, Equal Opportunity
 
 ---
 
-## 📂 Repository Structure
+## 🔬 Methodology
+1. **Data Pipeline:** Aggregating 50,000+ tracks (2017–2024) and extracting continuous audio features alongside geographic metadata.
+2. **LLM Processing:** Utilizing local AI to standardize cultural representation data.
+3. **Modeling:** Training classifiers evaluated via 5-fold cross-validation.
+4. **Bias Audit:** Leveraging Fairlearn to calculate disparity and evaluate if tracks from regions like Latin America, Africa, and Asia face higher barriers to global chart entry compared to Western tracks with identical audio scores.
 
-```text
-├── data/                   # Raw and processed datasets (Ignored in .gitignore)
-├── notebooks/              # Jupyter notebooks for EDA and model prototyping
-├── src/                    # Source code for the data pipeline
-│   ├── data_collection.py  # Spotify & Last.fm API scripts
-│   ├── llm_cleaning.py     # Ollama prompt chains for genre clustering
-│   ├── models.py           # Model training and evaluation scripts
-│   └── bias_audit.py       # Fairlearn implementation
-├── presentation/           # Research Day posters and slide decks
-├── requirements.txt        # Python dependencies
-└── README.md               # Project documentation
+---
+
+## 📊 Major Takeaway
+**Streaming algorithms may implicitly favor Western sonic profiles, restricting diverse cultural sounds to regional success despite having competitive audio features.** ---
+
+## ⚖️ Discussion & Ethics
+We acknowledge that proxy variables like "genre tags" are imperfect representations of cultural identity. This framework aims to highlight systemic architectural patterns rather than assign blame.
